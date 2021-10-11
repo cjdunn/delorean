@@ -1,16 +1,15 @@
 # !/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 # Delorean: Interpolation Preview by CJ Dunn.
 # Thanks to Frederik Berlaen and David Jonathan Ross.
 
 
 import vanilla
+from mojo.roboFont import CurrentFont, AllFonts, CurrentGlyph
+from fontParts.world import RGlyph
 from mojo.glyphPreview import GlyphPreview
 from mojo.UI import SliderEditStepper
-from mojo.events import addObserver, removeObserver, postEvent
 from mojo.subscriber import Subscriber, WindowController, registerCurrentGlyphSubscriber
-
 
 
 class DeloreanController(Subscriber, WindowController):
@@ -28,7 +27,6 @@ class DeloreanController(Subscriber, WindowController):
             ginit = g.name
         else:
             ginit = ""
-
 
         # use minSize to make window re-sizable
         self.w = vanilla.Window(
@@ -86,7 +84,7 @@ class DeloreanController(Subscriber, WindowController):
         # generate instance
         self.w.generate = vanilla.Button(
             (-35, -27, 27, lineHeight),
-            u"⬇", callback=self.generateCallback)
+            "⬇", callback=self.generateCallback)
 
         self.populateDropdownMenus()
 
@@ -107,16 +105,12 @@ class DeloreanController(Subscriber, WindowController):
         self.interpolateSetGlyph(self.w.gnameTextInput.get())
 
     def generateCallback(self, sender):
-        font1 = self.font1
-        font2 = self.font2
-
         gname = self.w.gnameTextInput.get()
 
         f = CurrentFont()
 
         pcnt = int((self.value)*100)
-
-        instanceName = gname+'.'+str(pcnt)
+        instanceName = f'{gname}.{pcnt}'
 
         if gname in self.font1 and gname in self.font2:
             i = self.interpolate(gname)
@@ -125,7 +119,7 @@ class DeloreanController(Subscriber, WindowController):
 
             f.insertGlyph(i)
 
-            print ('\nGlyph "'+instanceName+'" added to CurrentFont()')
+            print(f'\nGlyph "{instanceName}" added to CurrentFont()')
 
     def populateDropdownMenus(self):
         self.available_fonts = AllFonts()
@@ -147,7 +141,7 @@ class DeloreanController(Subscriber, WindowController):
             # If family names are different, display family name & style name.
             if familyNames_set:
                 if familyNames_differ:
-                    fontList = ['%s %s' % (f.info.familyName, f.info.styleName) for f in self.available_fonts]
+                    fontList = [f'{f.info.familyName} {f.info.styleName}' for f in self.available_fonts]
                 else:
                     fontList = [f.info.styleName for f in self.available_fonts]
             else:
@@ -161,7 +155,7 @@ class DeloreanController(Subscriber, WindowController):
             # Last resort (neither family nor style name are set), or the
             # family name is the same across UFOs (and no style name set):
             # Only display the font object as a string.
-            fontList = [str(f) for f in self.available_fonts]
+            fontList = [f'{f}' for f in self.available_fonts]
 
         self.w.leftList.setItems(fontList)
         self.w.rightList.setItems(fontList)
@@ -219,12 +213,12 @@ class DeloreanController(Subscriber, WindowController):
             glyph2 = self.font2[gname]
 
             report = glyph1.isCompatible(glyph2)
-            if report[0] == False:
+            if not report[0]:
                 # no good
-                reportText = u"😡 *** /" + gname + " is not compatible for interpolation ***"
+                reportText = f"😡 *** /{gname} is not compatible for interpolation ***"
             else:
                 # Status: good
-                reportText = u"😎"
+                reportText = "😎"
 
         self.w.reportText.set(reportText)
 
@@ -270,5 +264,5 @@ class DeloreanController(Subscriber, WindowController):
         return dstGlyph
 
 
-
-registerCurrentGlyphSubscriber(DeloreanController)
+if __name__ == '__main__':
+    registerCurrentGlyphSubscriber(DeloreanController)
