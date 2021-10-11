@@ -19,7 +19,7 @@
 	<key>developer</key>
 	<string>CJ Dunn</string>
 	<key>developerURL</key>
-	<string>http://thecjdunn.com</string>
+	<string>https://cjtype.com/</string>
 	<key>html</key>
 	<true/>
 	<key>launchAtStartUp</key>
@@ -35,11 +35,11 @@
 	<key>timeStamp</key>
 	<real>1492892367.14</real>
 	<key>version</key>
-	<string>0.52</string>
+	<string>0.60</string>
 	<key>com.robofontmechanic.Mechanic</key>
 	<dict>
 		<key>repository</key>
-		<string>cjdunn/RoboFontExtensions</string>
+		<string>cjdunn/delorean</string>
 		<key>summary</key>
   		<string>Preview how a glyph will interpolate while drawing in RoboFont</string>
 	</dict>
