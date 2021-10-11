@@ -28,10 +28,14 @@
 	<string></string>
 	<key>name</key>
 	<string>Delorean: Interpolation Preview</string>
+	<key>requiresVersionMajor</key>
+	<string>4</string>
+	<key>requiresVersionMinor</key>
+	<string>0</string>
 	<key>timeStamp</key>
 	<real>1492892367.14</real>
 	<key>version</key>
-	<string>0.51</string>
+	<string>0.52</string>
 	<key>com.robofontmechanic.Mechanic</key>
 	<dict>
 		<key>repository</key>
